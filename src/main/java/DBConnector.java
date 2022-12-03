@@ -3,9 +3,12 @@ import java.sql.*;
 
 public class DBConnector {
 
-    private ConfigManager configManager = new ConfigManager();
+    private static ConfigManager configManager = new ConfigManager();
 
-    public void createConnection(String tableQuery) {
+    public static void createConnection(String tableQuery) {
+        System.out.println(configManager.dbSchema);
+        System.out.println(configManager.username);
+        System.out.println(configManager.password);
 
         try {
             Connection connection = DriverManager.getConnection(configManager.dbSchema, configManager.username,
@@ -14,11 +17,10 @@ public class DBConnector {
             ResultSet tables = dbm.getTables(null, null, configManager.tableName, null);
             Statement statement = connection.createStatement();
             statement.executeUpdate(tableQuery);
-
             connection.close();
 
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch (SQLException throwable) {
+            throwable.printStackTrace();
         } {
 
         }

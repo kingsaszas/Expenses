@@ -3,8 +3,7 @@ public class ConfigManager {
     public String dbSchema;
     public String username;
     public String password;
-    public String tableName;
-    private static ConfigManager instance;
+    public static String tableName;
 
     protected ConfigManager() {
 
@@ -14,4 +13,7 @@ public class ConfigManager {
         tableName = "data";
     }
 
+    public String getTableName() {
+        return tableName;
+    }
 }

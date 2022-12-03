@@ -23,14 +23,17 @@ public class Controller {
     @FXML
     private ComboBox<String> monthCBox, yearCBox;
     @FXML
-    private TextField amountField, titleField;
+    private TextField amountField, descriptionField;
     @FXML
     private Label warningLabel;
 
     private double x, y;
 
+    ConfigManager cm = new ConfigManager();
+
 
     public void init(Stage stage) {
+
         warningLabel.setVisible(false);
         titlePane.setOnMousePressed(mouseEvent -> {
             x = mouseEvent.getSceneX();
@@ -65,18 +68,22 @@ public class Controller {
 
     @FXML
     void onSaveBtnClicked(MouseEvent mouseEvent) {
+
         System.out.println(monthCBox.getValue());
         System.out.println(yearCBox.getValue());
         System.out.println(amountField.getText());
-        System.out.println(titleField.getText());
+        System.out.println(descriptionField.getText());
+
         if (monthCBox.getValue() == null || yearCBox.getValue() == null || amountField.getText() == null
-        || titleField.getText() == null) {
+                || descriptionField.getText() == null) {
             //open new window with warning or show information about empty fields.
             warningLabel.setVisible(true);
-        }else {
+        } else {
             warningLabel.setVisible(false);
-            DataManager dm = new DataManager(monthCBox.getValue(), yearCBox.getValue(),
-                    Double.parseDouble(amountField.getText()), titleField.getText());
+            QueryCreator queryCreator = new QueryCreator(monthCBox.getValue(), yearCBox.getValue(),
+                    Double.parseDouble(amountField.getText()), descriptionField.getText(), cm.getTableName());
+            String sqlQuery = queryCreator.createQuery();
+            DBConnector.createConnection(sqlQuery);
         }
 
 
