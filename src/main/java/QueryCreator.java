@@ -15,8 +15,8 @@ public class QueryCreator {
 
     public String createQuery() {
 
-        StringBuilder stringBuilder = new StringBuilder("INSERT INTO " + tablename + " (YEAR, MONTH, DESCRIPTION)\n" +
-                "VALUES (" + year +", " + month + ", " + description + ", " + amount +");");
+        StringBuilder stringBuilder = new StringBuilder("INSERT INTO " + tablename + " (YEAR, MONTH, DESCRIPTION, AMOUNT)\n" +
+                "VALUES (" + year +", \"" + month + "\", \"" + description + "\", " + amount +");");
         System.out.println(stringBuilder.toString());
 
         return stringBuilder.toString();

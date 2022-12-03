@@ -26,6 +26,15 @@ public class Controller {
     private TextField amountField, descriptionField;
     @FXML
     private Label warningLabel;
+    //TOTAL SECTION
+    @FXML
+    private Label LblTotal;
+    @FXML
+    private Button btnShowExpensesTotal;
+    @FXML
+    private ComboBox<String> monthCBoxTotal;
+    @FXML
+    private ComboBox<String> yearCBoxTotal;
 
     private double x, y;
 
@@ -51,10 +60,12 @@ public class Controller {
                 FXCollections.observableArrayList("January", "February", "March", "April", "May", "June", "July",
                         "August", "September", "October", "November", "December");
         monthCBox.setItems(months);
+        monthCBoxTotal.setItems(months);
 
         ObservableList<String> years =
                 FXCollections.observableArrayList("2022", "2023");
         yearCBox.setItems(years);
+        yearCBoxTotal.setItems(years);
 
         amountField.textProperty().addListener(new ChangeListener<String>() {
             @Override
@@ -86,6 +97,11 @@ public class Controller {
             DBConnector.createConnection(sqlQuery);
         }
 
+
+    }
+
+    @FXML
+    void onShowExpensesTotalClicked(MouseEvent event) {
 
     }
 
