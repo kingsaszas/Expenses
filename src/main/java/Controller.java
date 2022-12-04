@@ -12,6 +12,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
+import java.sql.SQLException;
+
 
 public class Controller {
     @FXML
@@ -25,12 +27,15 @@ public class Controller {
     @FXML
     private TextField amountField, descriptionField;
     @FXML
-    private Label warningLabel;
+    private Label infoLabel;
+
     //TOTAL SECTION
     @FXML
     private Label LblTotal;
     @FXML
     private Button btnShowExpensesTotal;
+    @FXML
+    private Button btnShowTotalAmount;
     @FXML
     private ComboBox<String> monthCBoxTotal;
     @FXML
@@ -38,12 +43,13 @@ public class Controller {
 
     private double x, y;
 
-    ConfigManager cm = new ConfigManager();
+    ConfigManager configManager = new ConfigManager();
+    DBConnector dbConnector = new DBConnector();
 
 
     public void init(Stage stage) {
 
-        warningLabel.setVisible(false);
+        infoLabel.setVisible(false);
         titlePane.setOnMousePressed(mouseEvent -> {
             x = mouseEvent.getSceneX();
             y = mouseEvent.getSceneY();
@@ -53,7 +59,14 @@ public class Controller {
             stage.setY(mouseEvent.getScreenY() - y);
         });
 
-        btnClose.setOnMouseClicked(mouseEvent -> stage.close());
+        btnClose.setOnMouseClicked(mouseEvent -> {
+            stage.close();
+            try {
+                dbConnector.closeConnection();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        });
         btnHide.setOnMouseClicked(mouseEvent -> stage.setIconified(true));
 
         ObservableList<String> months =
@@ -78,7 +91,7 @@ public class Controller {
     }
 
     @FXML
-    void onSaveBtnClicked(MouseEvent mouseEvent) {
+    void onSaveBtnClicked(MouseEvent mouseEvent) throws SQLException {
 
         System.out.println(monthCBox.getValue());
         System.out.println(yearCBox.getValue());
@@ -88,20 +101,36 @@ public class Controller {
         if (monthCBox.getValue() == null || yearCBox.getValue() == null || amountField.getText() == null
                 || descriptionField.getText() == null) {
             //open new window with warning or show information about empty fields.
-            warningLabel.setVisible(true);
+            infoLabel.setText("Empty fields are not allowed");
+            infoLabel.setVisible(true);
         } else {
-            warningLabel.setVisible(false);
+            infoLabel.setVisible(false);
             QueryCreator queryCreator = new QueryCreator(monthCBox.getValue(), yearCBox.getValue(),
-                    Double.parseDouble(amountField.getText()), descriptionField.getText(), cm.getTableName());
-            String sqlQuery = queryCreator.createQuery();
-            DBConnector.createConnection(sqlQuery);
+                    Double.parseDouble(amountField.getText()), descriptionField.getText(), configManager.getTableName());
+            String sqlAddQuery = queryCreator.createInsertQuery();
+            dbConnector.updateSqlDataBase(sqlAddQuery);
+            infoLabel.setText("Expense was added");
+            infoLabel.setVisible(true);
         }
 
 
     }
 
     @FXML
-    void onShowExpensesTotalClicked(MouseEvent event) {
+    void onShowExpensesTotalClicked(MouseEvent event) throws SQLException {
+
+        infoLabel.setVisible(false);
+        LblTotal.setText("0.0");
+        System.out.println("TOTAL SUM");
+        System.out.println(monthCBoxTotal.getValue());
+        System.out.println(yearCBoxTotal.getValue());
+        if (!monthCBoxTotal.getValue().equals("") && !yearCBoxTotal.getValue().equals("")) {
+            System.out.println("im here");
+            QueryCreator queryCreator = new QueryCreator(monthCBoxTotal.getValue(), yearCBoxTotal.getValue(), configManager.getTableName());
+            String sqlTotalQuery = queryCreator.createSumByMonthYearQuery();
+            String sum = dbConnector.getTotalAmountByMonthYear(sqlTotalQuery);
+            LblTotal.setText(sum);
+        }
 
     }
 

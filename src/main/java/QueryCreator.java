@@ -12,11 +12,25 @@ public class QueryCreator {
         this.description = description;
         this.tablename = tablename;
     }
+    public QueryCreator(String month, String year, String tablename) {
+        this.month = month;
+        this.year = year;
+        this.tablename = tablename;
+    }
 
-    public String createQuery() {
+    public String createInsertQuery() {
 
         StringBuilder stringBuilder = new StringBuilder("INSERT INTO " + tablename + " (YEAR, MONTH, DESCRIPTION, AMOUNT)\n" +
                 "VALUES (" + year +", \"" + month + "\", \"" + description + "\", " + amount +");");
+        System.out.println(stringBuilder.toString());
+
+        return stringBuilder.toString();
+    }
+
+    public String createSumByMonthYearQuery() {
+
+        StringBuilder stringBuilder = new StringBuilder("SELECT SUM(AMOUNT) FROM " + tablename + " WHERE YEAR = " +
+                 year +" AND MONTH = \"" + month + "\";");
         System.out.println(stringBuilder.toString());
 
         return stringBuilder.toString();
