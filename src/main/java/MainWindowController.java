@@ -3,6 +3,9 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -10,12 +13,16 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
+import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Objects;
 
 
-public class Controller {
+public class MainWindowController {
     @FXML
     private ImageView btnClose, btnHide;
     @FXML
@@ -134,5 +141,24 @@ public class Controller {
 
     }
 
+    @FXML
+    void onShowExpensesListClicked(MouseEvent event) {
 
+        System.out.println("sdsds");
+
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ExpensesWindowInterface.fxml"));
+            Scene scene = new Scene(loader.load());
+            scene.setFill(Color.TRANSPARENT);
+            Stage stage = new Stage();
+            stage.setScene(scene);
+            stage.initStyle(StageStyle.TRANSPARENT);
+            //((MainWindowController)loader.getController()).init(stage);
+            stage.setResizable(false);
+            stage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

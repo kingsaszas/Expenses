@@ -6,7 +6,6 @@ public class App {
 
         MainWindow mainWindow = new MainWindow();
         mainWindow.run();
-
     }
 
 }

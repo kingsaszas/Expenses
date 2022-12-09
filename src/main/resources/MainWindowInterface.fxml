@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" stylesheets="@MainWindowStyle.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" styleClass="root" stylesheets="@MainWindowStyle.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MainWindowController">
    <children>
       <Pane fx:id="titlePane" layoutY="1.0" prefHeight="25.0" prefWidth="600.0">
          <children>
@@ -37,7 +37,7 @@
             </ImageView>
          </children>
       </Pane>
-      <Pane layoutX="6.0" layoutY="27.0" prefHeight="360.0" prefWidth="589.0" styleClass="mainPane">
+      <Pane layoutX="10.0" layoutY="26.0" prefHeight="360.0" prefWidth="580.0" styleClass="mainPane">
          <children>
             <Label layoutX="13.0" layoutY="14.0" prefHeight="19.0" prefWidth="46.0" text="Month">
                <font>
@@ -93,7 +93,7 @@
                </font>
             </Label>
             <Separator layoutX="305.0" layoutY="158.0" orientation="VERTICAL" prefHeight="193.0" prefWidth="19.0" />
-            <Button fx:id="btnShowExpensesTotal" layoutX="19.0" layoutY="315.0" mnemonicParsing="false" onMouseClicked="#onShowExpensesTotalClicked" prefHeight="25.0" prefWidth="274.0" text="Show expenses in table" />
+            <Button fx:id="btnShowExpensesTotal" layoutX="19.0" layoutY="315.0" mnemonicParsing="false" onMouseClicked="#onShowExpensesListClicked" prefHeight="25.0" prefWidth="274.0" text="Show expenses in table" />
             <Label fx:id="LblTotal" alignment="CENTER_RIGHT" layoutX="60.0" layoutY="254.0" prefHeight="19.0" prefWidth="134.0" text="0.0">
                <font>
                   <Font name="System Bold" size="13.0" />
