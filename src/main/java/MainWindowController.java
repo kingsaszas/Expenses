@@ -19,7 +19,6 @@ import javafx.stage.StageStyle;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.Objects;
 
 
 public class MainWindowController {
@@ -49,9 +48,11 @@ public class MainWindowController {
     private ComboBox<String> yearCBoxTotal;
 
     private double x, y;
+    private Stage stage_expenses = new Stage();
 
     ConfigManager configManager = new ConfigManager();
     DBConnector dbConnector = new DBConnector();
+    ExpensesWindowController expensesWindowController = new ExpensesWindowController();
 
 
     public void init(Stage stage) {
@@ -68,6 +69,7 @@ public class MainWindowController {
 
         btnClose.setOnMouseClicked(mouseEvent -> {
             stage.close();
+            stage_expenses.close();
             try {
                 dbConnector.closeConnection();
             } catch (SQLException throwables) {
@@ -150,12 +152,12 @@ public class MainWindowController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/ExpensesWindowInterface.fxml"));
             Scene scene = new Scene(loader.load());
             scene.setFill(Color.TRANSPARENT);
-            Stage stage = new Stage();
-            stage.setScene(scene);
-            stage.initStyle(StageStyle.TRANSPARENT);
-            //((MainWindowController)loader.getController()).init(stage);
-            stage.setResizable(false);
-            stage.show();
+
+            stage_expenses.setScene(scene);
+            stage_expenses.initStyle(StageStyle.TRANSPARENT);
+            ((ExpensesWindowController)loader.getController()).init(stage_expenses);
+            stage_expenses.setResizable(false);
+            stage_expenses.show();
 
         } catch (IOException e) {
             e.printStackTrace();
