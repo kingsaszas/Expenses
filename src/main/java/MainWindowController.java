@@ -3,9 +3,6 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -13,12 +10,12 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 
-import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.sql.SQLException;
+import java.time.Year;
+import java.util.Calendar;
 
 
 public class MainWindowController {
@@ -48,12 +45,10 @@ public class MainWindowController {
     private ComboBox<String> yearCBoxTotal;
 
     private double x, y;
-    private Stage stage_expenses = new Stage();
+    private final Stage stage_expenses = new Stage();
 
     ConfigManager configManager = new ConfigManager();
     DBConnector dbConnector = new DBConnector();
-    ExpensesWindowController expensesWindowController = new ExpensesWindowController();
-
 
     public void init(Stage stage) {
 
@@ -78,16 +73,22 @@ public class MainWindowController {
         });
         btnHide.setOnMouseClicked(mouseEvent -> stage.setIconified(true));
 
+        Calendar now = Calendar.getInstance();
+
         ObservableList<String> months =
                 FXCollections.observableArrayList("January", "February", "March", "April", "May", "June", "July",
                         "August", "September", "October", "November", "December");
         monthCBox.setItems(months);
+        monthCBox.getSelectionModel().select(now.get(Calendar.MONTH));
         monthCBoxTotal.setItems(months);
+        monthCBoxTotal.getSelectionModel().select(now.get(Calendar.MONTH));
 
         ObservableList<String> years =
                 FXCollections.observableArrayList("2022", "2023");
         yearCBox.setItems(years);
+        yearCBox.getSelectionModel().select(String.valueOf(now.get(Calendar.YEAR)));
         yearCBoxTotal.setItems(years);
+        yearCBoxTotal.getSelectionModel().select(String.valueOf(now.get(Calendar.YEAR)));
 
         amountField.textProperty().addListener(new ChangeListener<String>() {
             @Override
@@ -97,6 +98,9 @@ public class MainWindowController {
                 }
             }
         });
+
+        ExpensesWindow expensesWindow = new ExpensesWindow(stage_expenses);
+        expensesWindow.createListExpensesWindow();
     }
 
     @FXML
@@ -147,20 +151,11 @@ public class MainWindowController {
     void onShowExpensesListClicked(MouseEvent event) {
 
         System.out.println("sdsds");
-
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ExpensesWindowInterface.fxml"));
-            Scene scene = new Scene(loader.load());
-            scene.setFill(Color.TRANSPARENT);
-
-            stage_expenses.setScene(scene);
-            stage_expenses.initStyle(StageStyle.TRANSPARENT);
-            ((ExpensesWindowController)loader.getController()).init(stage_expenses);
-            stage_expenses.setResizable(false);
+        if (!monthCBoxTotal.getValue().equals("") && !yearCBoxTotal.getValue().equals("")) {
             stage_expenses.show();
 
-        } catch (IOException e) {
-            e.printStackTrace();
         }
     }
+
+
 }

@@ -1,11 +1,9 @@
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
-import javafx.stage.Stage;
-
-import java.sql.SQLException;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 
 public class ExpensesWindowController {
 
@@ -22,7 +20,25 @@ public class ExpensesWindowController {
     @FXML
     private Label yearLbl;
 
+    public void setExpensesTable(TableView<?> expensesTable) {
+        this.expensesTable = expensesTable;
+    }
+
+    public void setMonthLbl(Label monthLbl) {
+        this.monthLbl = monthLbl;
+    }
+
+    public void setYearLbl(Label yearLbl) {
+        this.yearLbl = yearLbl;
+    }
+
     private double x, y;
+    protected String year, month;
+
+//    public ExpensesWindowController(String year, String month) {
+//        this.year = year;
+//        this.month = month;
+//    }
 
     public void init(Stage stage) {
 
@@ -36,7 +52,7 @@ public class ExpensesWindowController {
         });
 
         btnClose.setOnMouseClicked(mouseEvent -> {
-            stage.close();
+            stage.hide();
         });
         btnHide.setOnMouseClicked(mouseEvent -> stage.setIconified(true));
     }
