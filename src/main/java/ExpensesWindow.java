@@ -5,6 +5,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class ExpensesWindow {
 
@@ -37,11 +38,13 @@ public class ExpensesWindow {
         ((ExpensesWindowController)loader.getController()).setYearLbl(year);
     }
 
-    public void setAmount() {
-        //(ExpensesWindowController)loader.getController()).
+    public void setAmountAndDescription(ArrayList<String> amountList, ArrayList<String> descList) {
+        amountList.forEach(amount -> {
+            ((ExpensesWindowController) loader.getController()).setAmountColumn(amount);
+        });
+        descList.forEach( desc -> {
+            ((ExpensesWindowController)loader.getController()).setDescriptionColumn(desc);
+        });
     }
 
-    public void setDescription() {
-        //(ExpensesWindowController)loader.getController()).
-    }
 }

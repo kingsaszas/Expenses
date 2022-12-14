@@ -13,6 +13,7 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Calendar;
 
 
@@ -125,6 +126,8 @@ public class MainWindowController {
             infoLabel.setVisible(true);
         }
 
+        amountField.setText("");
+        descriptionField.setText("");
 
     }
 
@@ -137,7 +140,6 @@ public class MainWindowController {
         System.out.println(monthCBoxTotal.getValue());
         System.out.println(yearCBoxTotal.getValue());
         if (!monthCBoxTotal.getValue().equals("") && !yearCBoxTotal.getValue().equals("")) {
-            System.out.println("im here");
             QueryCreator queryCreator = new QueryCreator(monthCBoxTotal.getValue(), yearCBoxTotal.getValue(), configManager.getTableName());
             String sqlTotalQuery = queryCreator.createSumByMonthYearQuery();
             String sum = dbConnector.getTotalAmountByMonthYear(sqlTotalQuery);
@@ -154,9 +156,29 @@ public class MainWindowController {
             expensesWindow.setLabels(monthCBoxTotal.getValue(), yearCBoxTotal.getValue());
 
             QueryCreator queryCreator = new QueryCreator(monthCBoxTotal.getValue(), yearCBoxTotal.getValue(), configManager.getTableName());
-            String sqlDataQuery = queryCreator.fillTableWithData();
-            dbConnector.getExpensesList(sqlDataQuery);
+            String sqlCountQuery = queryCreator.createCountRowsQuery();
+            int countRows = dbConnector.getCountRows(sqlCountQuery);
 
+            System.out.println(countRows);
+
+            ArrayList<String> amountList;
+            ArrayList<String> descriptionList;
+
+            //take amountValues to the list
+            String sqlAmountQuery = queryCreator.createGetAmountQuery();
+            amountList = dbConnector.getSimpleColumnValues(sqlAmountQuery);
+            System.out.println("list of amounts");
+            amountList.forEach(System.out::println);
+
+            //take descValues to the list
+            String sqlDescQuery = queryCreator.createGetDescriptionQuery();
+            descriptionList = dbConnector.getSimpleColumnValues(sqlDescQuery);
+            descriptionList.forEach(System.out::println);
+
+            //pass iterator and two lists to the method in expenses Window
+            expensesWindow.setAmountAndDescription(amountList, descriptionList);
+            amountList.clear();
+            descriptionList.clear();
             stage_expenses.show();
 
         }

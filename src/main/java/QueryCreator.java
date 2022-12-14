@@ -41,4 +41,26 @@ public class QueryCreator {
                 year +" AND MONTH = \"" + month + "\";");
         return stringBuilder.toString();
     }
+
+    protected String createCountRowsQuery() {
+
+        StringBuilder stringBuilder = new StringBuilder("SELECT COUNT(*) FROM " + tablename + " WHERE YEAR = " +
+                year +" AND MONTH = \"" + month + "\";");
+
+        return stringBuilder.toString();
+    }
+    protected String createGetAmountQuery() {
+
+        StringBuilder stringBuilder = new StringBuilder("SELECT AMOUNT FROM " + tablename + " WHERE YEAR = " +
+                year +" AND MONTH = \"" + month + "\";");
+
+        return stringBuilder.toString();
+    }
+    protected String createGetDescriptionQuery() {
+
+        StringBuilder stringBuilder = new StringBuilder("SELECT DESCRIPTION FROM " + tablename + " WHERE YEAR = " +
+                year +" AND MONTH = \"" + month + "\";");
+
+        return stringBuilder.toString();
+    }
 }

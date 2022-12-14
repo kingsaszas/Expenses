@@ -1,5 +1,6 @@
 import java.io.ObjectInputFilter;
 import java.sql.*;
+import java.util.ArrayList;
 
 public class DBConnector {
 
@@ -17,25 +18,6 @@ public class DBConnector {
         }
     }
 
-//    public static void createConnection(String tableQuery) {
-//        System.out.println(configManager.dbSchema);
-//        System.out.println(configManager.username);
-//        System.out.println(configManager.password);
-//
-//        try {
-//            connection = DriverManager.getConnection(configManager.dbSchema, configManager.username,
-//                    configManager.password);
-//            //DatabaseMetaData dbm = connection.getMetaData();
-//            //ResultSet tables = dbm.getTables(null, null, configManager.tableName, null);
-//            statement = connection.createStatement();
-//            statement.executeUpdate(tableQuery);
-//            connection.close();
-//
-//        } catch (SQLException throwable) {
-//            throwable.printStackTrace();
-//        }
-//    }
-
     public void updateSqlDataBase(String query) throws SQLException {
         statement.executeUpdate(query);
         //connection.close();
@@ -52,8 +34,21 @@ public class DBConnector {
         return sum;
     }
 
-    public void getExpensesList(String query) throws SQLException {
+    public int getCountRows(String query) throws SQLException {
         ResultSet result = statement.executeQuery(query);
+        result.next();
+        String countRows = result.getString(1);
+        return Integer.parseInt(countRows);
+    }
+
+    public ArrayList<String> getSimpleColumnValues(String query) throws SQLException {
+        ResultSet result = statement.executeQuery(query);
+        result.next();
+        ArrayList<String> tempArray = new ArrayList<>();
+        do {
+            tempArray.add(result.getString(1));
+        } while (result.next());
+        return tempArray;
     }
 
     public void closeConnection() throws SQLException {

@@ -40,6 +40,7 @@ public class ExpensesWindowController {
         });
 
         btnClose.setOnMouseClicked(mouseEvent -> {
+            expensesTable.getItems().clear();
             stage.hide();
         });
         btnHide.setOnMouseClicked(mouseEvent -> stage.setIconified(true));
@@ -57,15 +58,13 @@ public class ExpensesWindowController {
         this.yearLbl.setText(yearString);
     }
 
-    public void setAmountColumn() {
-
+    public void setAmountColumn(String amountValue) {
+        this.amountColumn = new TableColumn<>(amountValue);
     }
 
-    public void setDescriptionColumn() {
-
+    public void setDescriptionColumn(String descValue) {
+        this.descriptionColumn = new TableColumn<>(descValue);
     }
-
-
 
 
 
