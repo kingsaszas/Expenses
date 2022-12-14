@@ -9,6 +9,7 @@ import java.io.IOException;
 public class ExpensesWindow {
 
     private final Stage stage_expenses;
+    FXMLLoader loader;
 
     public ExpensesWindow(Stage stage) {
         this.stage_expenses = stage;
@@ -16,7 +17,7 @@ public class ExpensesWindow {
 
     protected void createListExpensesWindow() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ExpensesWindowInterface.fxml"));
+            loader = new FXMLLoader(getClass().getResource("/ExpensesWindowInterface.fxml"));
             Scene scene = new Scene(loader.load());
             scene.setFill(Color.TRANSPARENT);
 
@@ -29,5 +30,18 @@ public class ExpensesWindow {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void setLabels(String month, String year) {
+        ((ExpensesWindowController)loader.getController()).setMonthLbl(month);
+        ((ExpensesWindowController)loader.getController()).setYearLbl(year);
+    }
+
+    public void setAmount() {
+        //(ExpensesWindowController)loader.getController()).
+    }
+
+    public void setDescription() {
+        //(ExpensesWindowController)loader.getController()).
     }
 }

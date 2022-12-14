@@ -52,6 +52,10 @@ public class DBConnector {
         return sum;
     }
 
+    public void getExpensesList(String query) throws SQLException {
+        ResultSet result = statement.executeQuery(query);
+    }
+
     public void closeConnection() throws SQLException {
         connection.close();
     }

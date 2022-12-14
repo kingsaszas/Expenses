@@ -7,6 +7,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" styleClass="root" stylesheets="@ExpensesWindowStyle.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ExpensesWindowController">
@@ -35,21 +36,25 @@
             </ImageView>
          </children>
       </Pane>
-      <TableView fx:id="expensesTable" layoutX="18.0" layoutY="67.0" prefHeight="310.0" prefWidth="571.0" styleClass="mainPane">
-        <columns>
-          <TableColumn prefWidth="75.0" text="C1" />
-          <TableColumn prefWidth="75.0" text="C2" />
-        </columns>
-      </TableView>
-      <Label fx:id="yearLbl" layoutX="34.0" layoutY="40.0" prefHeight="18.0" prefWidth="57.0" text="Year" textFill="#faf7f7">
+      <Label fx:id="yearLbl" layoutX="93.0" layoutY="40.0" prefHeight="18.0" prefWidth="75.0" text="Year" textFill="#faf7f7">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
       </Label>
-      <Label fx:id="monthLbl" layoutX="102.0" layoutY="40.0" prefHeight="18.0" prefWidth="57.0" text="Month" textFill="#faf7f7">
+      <Label fx:id="monthLbl" layoutX="18.0" layoutY="40.0" prefHeight="18.0" prefWidth="75.0" text="Month" textFill="#faf7f7">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
       </Label>
+      <StackPane layoutX="14.0" layoutY="58.0" prefHeight="326.0" prefWidth="575.0">
+         <children>
+            <TableView fx:id="expensesTable" prefHeight="162.0" prefWidth="208.0" styleClass="mainPane">
+              <columns>
+                <TableColumn fx:id="amountColumn" maxWidth="80.0" prefWidth="75.0" text="Amount" />
+                <TableColumn fx:id="descriptionColumn" maxWidth="495.0" minWidth="75.0" prefWidth="495.0" resizable="false" text="Description" />
+              </columns>
+            </TableView>
+         </children>
+      </StackPane>
    </children>
 </AnchorPane>

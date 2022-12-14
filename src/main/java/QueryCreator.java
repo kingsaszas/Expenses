@@ -36,7 +36,9 @@ public class QueryCreator {
         return stringBuilder.toString();
     }
 
-    protected String fillTablewithData() {
-        return "";
+    protected String fillTableWithData() {
+        StringBuilder stringBuilder = new StringBuilder("SELECT * FROM " + tablename + " WHERE YEAR = " +
+                year +" AND MONTH = \"" + month + "\";");
+        return stringBuilder.toString();
     }
 }

@@ -1,5 +1,6 @@
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
@@ -19,26 +20,13 @@ public class ExpensesWindowController {
     private Pane titlePane;
     @FXML
     private Label yearLbl;
-
-    public void setExpensesTable(TableView<?> expensesTable) {
-        this.expensesTable = expensesTable;
-    }
-
-    public void setMonthLbl(Label monthLbl) {
-        this.monthLbl = monthLbl;
-    }
-
-    public void setYearLbl(Label yearLbl) {
-        this.yearLbl = yearLbl;
-    }
+    @FXML
+    private TableColumn<?, ?> descriptionColumn;
+    @FXML
+    private TableColumn<?, ?> amountColumn;
 
     private double x, y;
     protected String year, month;
-
-//    public ExpensesWindowController(String year, String month) {
-//        this.year = year;
-//        this.month = month;
-//    }
 
     public void init(Stage stage) {
 
@@ -56,4 +44,29 @@ public class ExpensesWindowController {
         });
         btnHide.setOnMouseClicked(mouseEvent -> stage.setIconified(true));
     }
+
+    public void setExpensesTable(TableView<?> expensesTable) {
+        this.expensesTable = expensesTable;
+    }
+
+    public void setMonthLbl(String monthString) {
+        this.monthLbl.setText(monthString);
+    }
+
+    public void setYearLbl(String yearString) {
+        this.yearLbl.setText(yearString);
+    }
+
+    public void setAmountColumn() {
+
+    }
+
+    public void setDescriptionColumn() {
+
+    }
+
+
+
+
+
 }

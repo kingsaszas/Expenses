@@ -12,9 +12,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
-import java.lang.reflect.InvocationTargetException;
 import java.sql.SQLException;
-import java.time.Year;
 import java.util.Calendar;
 
 
@@ -45,10 +43,11 @@ public class MainWindowController {
     private ComboBox<String> yearCBoxTotal;
 
     private double x, y;
-    private final Stage stage_expenses = new Stage();
+    private Stage stage_expenses = new Stage();
 
     ConfigManager configManager = new ConfigManager();
     DBConnector dbConnector = new DBConnector();
+    ExpensesWindow expensesWindow = new ExpensesWindow(stage_expenses);
 
     public void init(Stage stage) {
 
@@ -99,7 +98,7 @@ public class MainWindowController {
             }
         });
 
-        ExpensesWindow expensesWindow = new ExpensesWindow(stage_expenses);
+        //ExpensesWindow expensesWindow = new ExpensesWindow(stage_expenses);
         expensesWindow.createListExpensesWindow();
     }
 
@@ -148,10 +147,16 @@ public class MainWindowController {
     }
 
     @FXML
-    void onShowExpensesListClicked(MouseEvent event) {
+    void onShowExpensesListClicked(MouseEvent event) throws SQLException {
 
         System.out.println("sdsds");
         if (!monthCBoxTotal.getValue().equals("") && !yearCBoxTotal.getValue().equals("")) {
+            expensesWindow.setLabels(monthCBoxTotal.getValue(), yearCBoxTotal.getValue());
+
+            QueryCreator queryCreator = new QueryCreator(monthCBoxTotal.getValue(), yearCBoxTotal.getValue(), configManager.getTableName());
+            String sqlDataQuery = queryCreator.fillTableWithData();
+            dbConnector.getExpensesList(sqlDataQuery);
+
             stage_expenses.show();
 
         }
