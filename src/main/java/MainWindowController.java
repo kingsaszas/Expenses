@@ -167,13 +167,10 @@ public class MainWindowController {
             //take amountValues to the list
             String sqlAmountQuery = queryCreator.createGetAmountQuery();
             amountList = dbConnector.getSimpleColumnValues(sqlAmountQuery);
-            System.out.println("list of amounts");
-            amountList.forEach(System.out::println);
 
             //take descValues to the list
             String sqlDescQuery = queryCreator.createGetDescriptionQuery();
             descriptionList = dbConnector.getSimpleColumnValues(sqlDescQuery);
-            descriptionList.forEach(System.out::println);
 
             //pass iterator and two lists to the method in expenses Window
             expensesWindow.setAmountAndDescription(amountList, descriptionList);

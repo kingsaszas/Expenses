@@ -9,11 +9,11 @@ import java.util.ArrayList;
 
 public class ExpensesWindow {
 
-    private final Stage stage_expenses;
+    private final Stage STAGE_EXPENSES;
     FXMLLoader loader;
 
     public ExpensesWindow(Stage stage) {
-        this.stage_expenses = stage;
+        this.STAGE_EXPENSES = stage;
     }
 
     protected void createListExpensesWindow() {
@@ -22,11 +22,11 @@ public class ExpensesWindow {
             Scene scene = new Scene(loader.load());
             scene.setFill(Color.TRANSPARENT);
 
-            stage_expenses.setScene(scene);
-            stage_expenses.initStyle(StageStyle.TRANSPARENT);
-            ((ExpensesWindowController)loader.getController()).init(stage_expenses);
-            stage_expenses.setResizable(false);
-            //stage_expenses.show();
+            STAGE_EXPENSES.setScene(scene);
+            STAGE_EXPENSES.initStyle(StageStyle.TRANSPARENT);
+            ((ExpensesWindowController)loader.getController()).init(STAGE_EXPENSES);
+            STAGE_EXPENSES.setResizable(false);
+            //STAGE_EXPENSES.show();
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -39,12 +39,8 @@ public class ExpensesWindow {
     }
 
     public void setAmountAndDescription(ArrayList<String> amountList, ArrayList<String> descList) {
-        amountList.forEach(amount -> {
-            ((ExpensesWindowController) loader.getController()).setAmountColumn(amount);
-        });
-        descList.forEach( desc -> {
-            ((ExpensesWindowController)loader.getController()).setDescriptionColumn(desc);
-        });
+        ((ExpensesWindowController) loader.getController()).setExpensesTable(amountList,descList);
+
     }
 
 }

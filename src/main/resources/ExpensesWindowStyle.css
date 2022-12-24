@@ -5,3 +5,8 @@
 .mainPane{
     -fx-background-color: linear-gradient(to bottom right, #FF7F50, #6A5ACD);
 }
+
+.highlight{
+    -fx-background-color: #00000025;
+    -fx-background-radius: 15;
+}
