@@ -19,19 +19,15 @@ public class QueryCreator {
     }
 
     protected String createInsertQuery() {
-
         StringBuilder stringBuilder = new StringBuilder("INSERT INTO " + tablename + " (YEAR, MONTH, DESCRIPTION, AMOUNT)\n" +
                 "VALUES (" + year +", \"" + month + "\", \"" + description + "\", " + amount +");");
-        System.out.println(stringBuilder.toString());
 
         return stringBuilder.toString();
     }
 
     protected String createSumByMonthYearQuery() {
-
         StringBuilder stringBuilder = new StringBuilder("SELECT SUM(AMOUNT) FROM " + tablename + " WHERE YEAR = " +
                  year +" AND MONTH = \"" + month + "\";");
-        System.out.println(stringBuilder.toString());
 
         return stringBuilder.toString();
     }
@@ -43,21 +39,18 @@ public class QueryCreator {
     }
 
     protected String createCountRowsQuery() {
-
         StringBuilder stringBuilder = new StringBuilder("SELECT COUNT(*) FROM " + tablename + " WHERE YEAR = " +
                 year +" AND MONTH = \"" + month + "\";");
 
         return stringBuilder.toString();
     }
     protected String createGetAmountQuery() {
-
         StringBuilder stringBuilder = new StringBuilder("SELECT AMOUNT FROM " + tablename + " WHERE YEAR = " +
                 year +" AND MONTH = \"" + month + "\";");
 
         return stringBuilder.toString();
     }
     protected String createGetDescriptionQuery() {
-
         StringBuilder stringBuilder = new StringBuilder("SELECT DESCRIPTION FROM " + tablename + " WHERE YEAR = " +
                 year +" AND MONTH = \"" + month + "\";");
 

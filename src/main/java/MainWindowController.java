@@ -7,6 +7,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
@@ -15,6 +16,7 @@ import javafx.stage.Stage;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Objects;
 
 
 public class MainWindowController {
@@ -44,7 +46,7 @@ public class MainWindowController {
     private ComboBox<String> yearCBoxTotal;
 
     private double x, y;
-    private Stage stage_expenses = new Stage();
+    private final Stage stage_expenses = new Stage();
 
     ConfigManager configManager = new ConfigManager();
     DBConnector dbConnector = new DBConnector();
@@ -99,17 +101,11 @@ public class MainWindowController {
             }
         });
 
-        //ExpensesWindow expensesWindow = new ExpensesWindow(stage_expenses);
         expensesWindow.createListExpensesWindow();
     }
 
     @FXML
     void onSaveBtnClicked(MouseEvent mouseEvent) throws SQLException {
-
-        System.out.println(monthCBox.getValue());
-        System.out.println(yearCBox.getValue());
-        System.out.println(amountField.getText());
-        System.out.println(descriptionField.getText());
 
         if (monthCBox.getValue() == null || yearCBox.getValue() == null || amountField.getText() == null
                 || descriptionField.getText() == null) {
@@ -128,7 +124,6 @@ public class MainWindowController {
 
         amountField.setText("");
         descriptionField.setText("");
-
     }
 
     @FXML
@@ -136,30 +131,23 @@ public class MainWindowController {
 
         infoLabel.setVisible(false);
         LblTotal.setText("0.0");
-        System.out.println("TOTAL SUM");
-        System.out.println(monthCBoxTotal.getValue());
-        System.out.println(yearCBoxTotal.getValue());
         if (!monthCBoxTotal.getValue().equals("") && !yearCBoxTotal.getValue().equals("")) {
             QueryCreator queryCreator = new QueryCreator(monthCBoxTotal.getValue(), yearCBoxTotal.getValue(), configManager.getTableName());
             String sqlTotalQuery = queryCreator.createSumByMonthYearQuery();
             String sum = dbConnector.getTotalAmountByMonthYear(sqlTotalQuery);
             LblTotal.setText(sum);
         }
-
     }
 
     @FXML
     void onShowExpensesListClicked(MouseEvent event) throws SQLException {
 
-        System.out.println("sdsds");
         if (!monthCBoxTotal.getValue().equals("") && !yearCBoxTotal.getValue().equals("")) {
             expensesWindow.setLabels(monthCBoxTotal.getValue(), yearCBoxTotal.getValue());
 
             QueryCreator queryCreator = new QueryCreator(monthCBoxTotal.getValue(), yearCBoxTotal.getValue(), configManager.getTableName());
             String sqlCountQuery = queryCreator.createCountRowsQuery();
             int countRows = dbConnector.getCountRows(sqlCountQuery);
-
-            System.out.println(countRows);
 
             ArrayList<String> amountList;
             ArrayList<String> descriptionList;

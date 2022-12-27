@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class DBConnector {
 
-    private static ConfigManager configManager = new ConfigManager();
+    private static final ConfigManager configManager = new ConfigManager();
     public static Connection connection;
     public static Statement statement;
 
@@ -20,7 +20,6 @@ public class DBConnector {
 
     public void updateSqlDataBase(String query) throws SQLException {
         statement.executeUpdate(query);
-        //connection.close();
     }
 
     public String getTotalAmountByMonthYear(String query) throws SQLException {
@@ -29,8 +28,6 @@ public class DBConnector {
         String sum = result.getString(1);
         if (sum == null)
             sum = "0.0";
-        System.out.println("SUM: " + sum);
-        //connection.close();
         return sum;
     }
 

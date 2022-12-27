@@ -21,13 +21,10 @@ public class ExpensesWindow {
             loader = new FXMLLoader(getClass().getResource("/ExpensesWindowInterface.fxml"));
             Scene scene = new Scene(loader.load());
             scene.setFill(Color.TRANSPARENT);
-
             STAGE_EXPENSES.setScene(scene);
             STAGE_EXPENSES.initStyle(StageStyle.TRANSPARENT);
             ((ExpensesWindowController)loader.getController()).init(STAGE_EXPENSES);
             STAGE_EXPENSES.setResizable(false);
-            //STAGE_EXPENSES.show();
-
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -40,7 +37,6 @@ public class ExpensesWindow {
 
     public void setAmountAndDescription(ArrayList<String> amountList, ArrayList<String> descList) {
         ((ExpensesWindowController) loader.getController()).setExpensesTable(amountList,descList);
-
     }
 
 }
